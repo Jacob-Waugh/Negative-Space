@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +29,6 @@ public class PlayersideCamera : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("is this at least running?");
         films = GameObject.FindGameObjectsWithTag("film");
         if (polaroid == null)
         {
@@ -37,11 +38,9 @@ public class PlayersideCamera : MonoBehaviour
         {
             camcam = transform.Find("camcam").gameObject;
         }
-        Debug.Log("this is fine");
         cam = camcam.GetComponent<CameraCamera>();
         window = polaroid.transform.Find("Canvas/Panel/Window").gameObject.GetComponent<RawImage>();
         int hidden = LayerMask.NameToLayer("hidden");
-        Debug.Log(hidden);
         foreach (GameObject obj in films)
         {
             foreach (Transform child in obj.transform)
@@ -58,19 +57,24 @@ public class PlayersideCamera : MonoBehaviour
             }
             obj.layer = hidden;
         }
+        polaroid.SetActive(false);
     }
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            polaroid.SetActive(true);
             cam.Take();
             int hidden = LayerMask.NameToLayer("hidden");
             foreach (GameObject obj in films)
             {
-                Vector3 point = camcam.GetComponent<Camera>().WorldToViewportPoint(obj.transform.position);
-                if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
+                
+                if (tryPicture(obj.transform.position))
                 {
-                    obj.GetComponent<Collider>().isTrigger = false;
+                    if (obj.gameObject.GetComponent<Collider>() != null)
+                    {
+                        obj.GetComponent<Collider>().isTrigger = false;
+                    }
                     obj.layer = 0;
                     foreach (Transform child in obj.transform)
                     {
@@ -83,7 +87,10 @@ public class PlayersideCamera : MonoBehaviour
                 }
                 else
                 {
-                    obj.GetComponent<Collider>().isTrigger = true;
+                    if (obj.gameObject.GetComponent<Collider>() != null)
+                    {
+                        obj.GetComponent<Collider>().isTrigger = true;
+                    }
                     obj.layer = hidden;
                     foreach (Transform child in obj.transform)
                     {
@@ -111,5 +118,26 @@ public class PlayersideCamera : MonoBehaviour
         Debug.Log("trystart");
         //then change
         PictureChange(image);
+    }
+    bool tryPicture(Vector3 pos)
+    {
+        Vector3 point = camcam.GetComponent<Camera>().WorldToViewportPoint(pos);
+        if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
+        {
+            Debug.Log(pos);
+            Debug.Log(camcam.transform.position);
+            RaycastHit hit;
+            if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500))
+            {
+                if (hit.transform.gameObject.tag != "film")
+                {
+                    Debug.Log(hit.transform.gameObject);
+                    return false;
+                }
+                else return true;
+            }
+            else { return false; }
+        }
+        else return false;
     }
 }

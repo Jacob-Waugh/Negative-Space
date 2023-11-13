@@ -6,6 +6,7 @@ TagManager:
   tags:
   - camcam
   - Polaroid
+  - film
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - hidden
-  - 
+  - player
   - 
   - 
   - 
