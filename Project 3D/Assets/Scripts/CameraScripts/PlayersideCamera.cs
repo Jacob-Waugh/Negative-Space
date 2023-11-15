@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class PlayersideCamera : MonoBehaviour
 {
+    public GameObject flash;
+    Animator animator;
+
     public static PlayersideCamera instance;
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class PlayersideCamera : MonoBehaviour
 
     private void Start()
     {
+        animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film");
         enemies = GameObject.FindGameObjectsWithTag("enemy");
         clues = GameObject.FindGameObjectsWithTag("clue");
@@ -67,6 +71,9 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            animator.ResetTrigger("DoFlash");
+            animator.SetTrigger("DoFlash");
+            AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             polaroid.SetActive(true);
             cam.Take();
             int hidden = LayerMask.NameToLayer("hidden");
