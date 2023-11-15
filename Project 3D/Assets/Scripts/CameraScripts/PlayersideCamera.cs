@@ -35,6 +35,7 @@ public class PlayersideCamera : MonoBehaviour
 
     private void Start()
     {
+        flash = GameObject.Find("Flash");
         animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
         enemies = GameObject.FindGameObjectsWithTag("enemy").ToList();
@@ -72,7 +73,7 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            animator.Play("Flash");
+            animator.Play("Flash", -1, 0f);
             AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             polaroid.SetActive(true);
             cam.Take();
@@ -193,7 +194,7 @@ public class PlayersideCamera : MonoBehaviour
     void hitEnemy(GameObject enemy)
     {
         Debug.Log("I hit an enemy, " + enemy.name);
-        //enemies.RemoveAt();
+        enemies.Remove(enemy);
         Destroy(enemy);
     }
 }
