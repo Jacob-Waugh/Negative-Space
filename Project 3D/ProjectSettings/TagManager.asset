@@ -10,6 +10,8 @@ TagManager:
   - audio
   - enemy
   - clue
+  - key
+  - lock
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - UI
   - hidden
   - player
-  - polaroid
-  - 
+  - ghosts
+  - interact
   - 
   - 
   - 

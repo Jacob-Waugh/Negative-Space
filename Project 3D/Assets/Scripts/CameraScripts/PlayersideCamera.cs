@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -127,7 +128,7 @@ public class PlayersideCamera : MonoBehaviour
             foreach(GameObject obj in clues)
             {
                 HiddenObject hideScript = obj.GetComponent<HiddenObject>();
-                if (tryPicture(new Vector3(obj.transform.position.x*1.1f, obj.transform.position.y*1.1f, obj.transform.position.z*1.1f)))
+                if (tryPicture(obj.GetComponent<Collider>().bounds.center))
                 {
                     if (hideScript != null)
                     {
@@ -150,6 +151,30 @@ public class PlayersideCamera : MonoBehaviour
             else
             {
                 AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
+            }
+            
+        }
+        //said I was gonna leave this for camera stuff, that was a LIE I do not want to touch playercontroller
+        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.Find("Joint/PlayerCamera").transform.position, transform.Find("Joint/PlayerCamera").TransformDirection(Vector3.forward), out hit, 30f))
+        {
+            GameObject go = hit.transform.gameObject;
+            int interactLayer = LayerMask.NameToLayer("interact");
+            if(go.layer == interactLayer)
+            {
+                GameObject gop = hit.transform.parent.gameObject;
+                //highlight
+
+                //interact
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if(gop.tag == "key")
+                    {
+                        Key keyScript = gop.GetComponent<Key>();
+                        keyScript.Turn(go.transform);
+                    }
+                }
             }
             
         }
@@ -190,7 +215,10 @@ public class PlayersideCamera : MonoBehaviour
 
     void hitEnemy(GameObject enemy)
     {
-        enemies.Remove(enemy);
-        Destroy(enemy);
+        if (enemy.layer == LayerMask.NameToLayer("ghosts"))
+        {
+            enemies.Remove(enemy);
+            Destroy(enemy);
+        }
     }
 }

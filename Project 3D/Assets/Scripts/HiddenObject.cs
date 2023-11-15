@@ -11,18 +11,18 @@ public class HiddenObject : MonoBehaviour
     private void Start()
     {
         hiddenLayer = LayerMask.NameToLayer("hidden");
-        hidden.layer = hiddenLayer;
-        unhidden.layer = 0;
+        unhidden.layer = hiddenLayer;
+        hidden.layer = 0;
 
     }
     public void Change()
     {
-        hidden.layer = 0;
-        unhidden.layer = hiddenLayer;
+        unhidden.layer = 0;
+        hidden.layer = hiddenLayer;
     }
     public void Unchange()
     {
-        hidden.layer = hiddenLayer;
-        unhidden.layer = 0;
+        unhidden.layer = hiddenLayer;
+        hidden.layer = 0;
     }
 }
