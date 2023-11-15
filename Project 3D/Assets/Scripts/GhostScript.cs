@@ -19,6 +19,7 @@ public class GhostScript : MonoBehaviour
         if (Vector3.Distance(transform.position, player.transform.position) < 0.001f)
         {
             Debug.Log("Bang!");
+            PlayersideCamera.instance.enemies.Remove(this.gameObject);
             Destroy(this.gameObject);
         }
     }

@@ -17,14 +17,11 @@ public class HiddenObject : MonoBehaviour
     }
     public void Change()
     {
-
-        Debug.Log("change");
         hidden.layer = 0;
         unhidden.layer = hiddenLayer;
     }
     public void Unchange()
     {
-        Debug.Log("unchange");
         hidden.layer = hiddenLayer;
         unhidden.layer = 0;
     }

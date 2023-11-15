@@ -30,7 +30,7 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] CameraCamera cam;
     [SerializeField] RawImage window;
     [SerializeField] List<GameObject> films;
-    [SerializeField] List<GameObject> enemies;
+    public List<GameObject> enemies;
     [SerializeField] List<GameObject> clues;
 
     private void Start()
@@ -120,7 +120,6 @@ public class PlayersideCamera : MonoBehaviour
             {
                 if (tryPicture(obj.transform.position))
                 {
-                    Debug.Log(obj.transform.position);
                     hitEnemy(obj);
                     flash = true;
                 }
@@ -174,12 +173,10 @@ public class PlayersideCamera : MonoBehaviour
         Vector3 point = camcam.GetComponent<Camera>().WorldToViewportPoint(pos);
         if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
         {
-            Debug.Log("Somethings wong, I can feel it");
             RaycastHit hit;
             if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500))
             {
-                Debug.Log(hit.transform.gameObject);
-                Debug.DrawRay(camcam.transform.position, pos - camcam.transform.position, UnityEngine.Color.yellow, 30);
+                Debug.DrawRay(camcam.transform.position, pos - camcam.transform.position, UnityEngine.Color.yellow, 1);
                 if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy" && hit.transform.gameObject.tag != "clue")
                 {
                     return false;
@@ -193,7 +190,6 @@ public class PlayersideCamera : MonoBehaviour
 
     void hitEnemy(GameObject enemy)
     {
-        Debug.Log("I hit an enemy, " + enemy.name);
         enemies.Remove(enemy);
         Destroy(enemy);
     }
