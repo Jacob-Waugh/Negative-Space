@@ -26,10 +26,12 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] CameraCamera cam;
     [SerializeField] RawImage window;
     [SerializeField] GameObject[] films;
+    [SerializeField] GameObject[] enemies;
 
     private void Start()
     {
         films = GameObject.FindGameObjectsWithTag("film");
+        enemies = GameObject.FindGameObjectsWithTag("enemy");
         if (polaroid == null)
         {
             polaroid = GameObject.Find("Joint/PlayerCamera/Polaroid").gameObject;
@@ -63,6 +65,7 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             polaroid.SetActive(true);
             cam.Take();
             int hidden = LayerMask.NameToLayer("hidden");
@@ -102,7 +105,15 @@ public class PlayersideCamera : MonoBehaviour
                     }
                 }
             }
-
+            foreach(GameObject obj in enemies)
+            {
+                Debug.Log(obj.transform.position);
+                if (tryPicture(obj.transform.position))
+                {
+                    hitEnemy(obj);
+                }
+            }
+            AudioManager.instance.PlaySFX(AudioManager.instance.cameraFlash);
         }
     }
 
@@ -110,12 +121,12 @@ public class PlayersideCamera : MonoBehaviour
     {
         //anim for this
         window.texture = image;
-        Debug.Log("trychange");
+
     }
     public void PictureStartup(Texture2D image)
     {
         //etc
-        Debug.Log("trystart");
+
         //then change
         PictureChange(image);
     }
@@ -124,14 +135,12 @@ public class PlayersideCamera : MonoBehaviour
         Vector3 point = camcam.GetComponent<Camera>().WorldToViewportPoint(pos);
         if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
         {
-            Debug.Log(pos);
-            Debug.Log(camcam.transform.position);
             RaycastHit hit;
             if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500))
             {
-                if (hit.transform.gameObject.tag != "film")
+                Debug.Log(hit.transform.gameObject);
+                if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy")
                 {
-                    Debug.Log(hit.transform.gameObject);
                     return false;
                 }
                 else return true;
@@ -139,5 +148,11 @@ public class PlayersideCamera : MonoBehaviour
             else { return false; }
         }
         else return false;
+    }
+
+    void hitEnemy(GameObject enemy)
+    {
+        Debug.Log("I hit an enemy, " + enemy.name);
+        Destroy(enemy);
     }
 }

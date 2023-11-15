@@ -8,6 +8,7 @@ TagManager:
   - Polaroid
   - film
   - audio
+  - enemy
   layers:
   - Default
   - TransparentFX

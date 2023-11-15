@@ -6,6 +6,21 @@ using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
 
+    //this part is sort of a pseudo-singleton, which lets us call it from wherever using AudioManager.instance
+    public static AudioManager instance;
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            instance = null;
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
 
@@ -22,42 +37,25 @@ public class AudioManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        // scene = SceneManager.GetActiveScene();
-       // Debug.Log("Active Scene is " + scene.name+".");
-       //Scene currentScene = SceneManager.GetActiveScene ();
-       //SceneManager.GetActiveScene().name;
-       //string sceneName = currentScene.name ();
-       //if (sceneName == "MainMenu")
-      // {
-       // musicSource.clip=mainMenuMusic;
-       // musicSource.Play(); 
-      // }
-      // else if (sceneName== "Level1")
-      // {
-       // musicSource.clip=backgroundMusic;
-       // musicSource.Play();
-       //}
-    
-       musicSource.clip=mainMenuMusic;
-       musicSource.Play(); 
-    }
-    //public void LevelMusic()
-   // {
-     //   string currentScene = SceneManager.GetActiveScene().name;
-      //  switch (currentScene)
-      //  {
-       //     case "MainMenu";
-        //    musicSource.clip=mainMenuMusic;
-        //    musicSource.Play();
-        //    break;
+   {
+       LevelMusic();
+   }
+   public void LevelMusic()
+   {
+       string currentScene = SceneManager.GetActiveScene().name;
+       switch (currentScene)
+       {
+           case "MainMenu":
+            musicSource.clip=mainMenuMusic;
+            musicSource.Play();
+           break;
 
-        //    case "Level1";
-         //   musicSource.clip=backgroundMusic;
-         //   musicSource.Play();
-         //   break;
-       // }
-   // }
+           case "Level1":
+            musicSource.clip=backgroundMusic;
+            musicSource.Play();
+           break;
+       }
+   }
 
     // Update is called once per frame
     void Update()
@@ -66,6 +64,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFX(AudioClip clip)
     {
+        
         SFXSource.PlayOneShot(clip);
     }
 }
