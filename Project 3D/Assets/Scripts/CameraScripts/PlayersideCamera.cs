@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,16 +29,16 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] GameObject camcam;
     [SerializeField] CameraCamera cam;
     [SerializeField] RawImage window;
-    [SerializeField] GameObject[] films;
-    [SerializeField] GameObject[] enemies;
-    [SerializeField] GameObject[] clues;
+    [SerializeField] List<GameObject> films;
+    [SerializeField] List<GameObject> enemies;
+    [SerializeField] List<GameObject> clues;
 
     private void Start()
     {
         animator = flash.GetComponent<Animator>();
-        films = GameObject.FindGameObjectsWithTag("film");
-        enemies = GameObject.FindGameObjectsWithTag("enemy");
-        clues = GameObject.FindGameObjectsWithTag("clue");
+        films = GameObject.FindGameObjectsWithTag("film").ToList();
+        enemies = GameObject.FindGameObjectsWithTag("enemy").ToList();
+        clues = GameObject.FindGameObjectsWithTag("clue").ToList();
         if (polaroid == null)
         {
             polaroid = GameObject.Find("Joint/PlayerCamera/Polaroid").gameObject;
@@ -71,8 +72,7 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            animator.ResetTrigger("DoFlash");
-            animator.SetTrigger("DoFlash");
+            animator.Play("Flash");
             AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             polaroid.SetActive(true);
             cam.Take();
@@ -193,6 +193,7 @@ public class PlayersideCamera : MonoBehaviour
     void hitEnemy(GameObject enemy)
     {
         Debug.Log("I hit an enemy, " + enemy.name);
+        //enemies.RemoveAt();
         Destroy(enemy);
     }
 }
