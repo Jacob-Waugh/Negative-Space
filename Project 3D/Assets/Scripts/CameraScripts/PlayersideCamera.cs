@@ -27,11 +27,13 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] RawImage window;
     [SerializeField] GameObject[] films;
     [SerializeField] GameObject[] enemies;
+    [SerializeField] GameObject[] clues;
 
     private void Start()
     {
         films = GameObject.FindGameObjectsWithTag("film");
         enemies = GameObject.FindGameObjectsWithTag("enemy");
+        clues = GameObject.FindGameObjectsWithTag("clue");
         if (polaroid == null)
         {
             polaroid = GameObject.Find("Joint/PlayerCamera/Polaroid").gameObject;
@@ -65,10 +67,10 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             polaroid.SetActive(true);
             cam.Take();
             int hidden = LayerMask.NameToLayer("hidden");
+            bool flash = false;
             foreach (GameObject obj in films)
             {
                 
@@ -87,6 +89,7 @@ public class PlayersideCamera : MonoBehaviour
                         }
                         child.gameObject.layer = 0;
                     }
+                    flash = true;
                 }
                 else
                 {
@@ -107,13 +110,41 @@ public class PlayersideCamera : MonoBehaviour
             }
             foreach(GameObject obj in enemies)
             {
-                Debug.Log(obj.transform.position);
                 if (tryPicture(obj.transform.position))
                 {
+                    Debug.Log(obj.transform.position);
                     hitEnemy(obj);
+                    flash = true;
                 }
             }
-            AudioManager.instance.PlaySFX(AudioManager.instance.cameraFlash);
+            foreach(GameObject obj in clues)
+            {
+                HiddenObject hideScript = obj.GetComponent<HiddenObject>();
+                if (tryPicture(new Vector3(obj.transform.position.x*1.1f, obj.transform.position.y*1.1f, obj.transform.position.z*1.1f)))
+                {
+                    if (hideScript != null)
+                    {
+                        hideScript.Change();
+                    }
+                    flash = true;
+                }
+                else
+                {
+                    if (hideScript != null)
+                    {
+                        hideScript.Unchange();
+                    }
+                }
+            }
+            if (flash)
+            {
+                AudioManager.instance.PlaySFX(AudioManager.instance.cameraFlash);
+            }
+            else
+            {
+                AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
+            }
+            
         }
     }
 
@@ -135,11 +166,13 @@ public class PlayersideCamera : MonoBehaviour
         Vector3 point = camcam.GetComponent<Camera>().WorldToViewportPoint(pos);
         if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
         {
+            Debug.Log("Somethings wong, I can feel it");
             RaycastHit hit;
             if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500))
             {
                 Debug.Log(hit.transform.gameObject);
-                if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy")
+                Debug.DrawRay(camcam.transform.position, pos - camcam.transform.position, UnityEngine.Color.yellow, 30);
+                if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy" && hit.transform.gameObject.tag != "clue")
                 {
                     return false;
                 }

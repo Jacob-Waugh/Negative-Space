@@ -9,6 +9,7 @@ TagManager:
   - film
   - audio
   - enemy
+  - clue
   layers:
   - Default
   - TransparentFX
