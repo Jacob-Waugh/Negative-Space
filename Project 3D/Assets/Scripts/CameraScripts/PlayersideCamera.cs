@@ -82,7 +82,7 @@ public class PlayersideCamera : MonoBehaviour
             bool flash = false;
             foreach (GameObject obj in films)
             {
-                
+
                 if (tryPicture(obj.transform.position))
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
@@ -117,7 +117,7 @@ public class PlayersideCamera : MonoBehaviour
                     }
                 }
             }
-            foreach(GameObject obj in enemies)
+            foreach (GameObject obj in enemies)
             {
                 if (tryPicture(obj.transform.position))
                 {
@@ -125,7 +125,7 @@ public class PlayersideCamera : MonoBehaviour
                     flash = true;
                 }
             }
-            foreach(GameObject obj in clues)
+            foreach (GameObject obj in clues)
             {
                 HiddenObject hideScript = obj.GetComponent<HiddenObject>();
                 if (tryPicture(obj.GetComponent<Collider>().bounds.center))
@@ -152,31 +152,40 @@ public class PlayersideCamera : MonoBehaviour
             {
                 AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             }
-            
+
         }
         //said I was gonna leave this for camera stuff, that was a LIE I do not want to touch playercontroller
-        
+
         RaycastHit hit;
-        if (Physics.Raycast(transform.Find("Joint/PlayerCamera").transform.position, transform.Find("Joint/PlayerCamera").TransformDirection(Vector3.forward), out hit, 30f))
+        if (Physics.Raycast(transform.Find("Joint/PlayerCamera").transform.position, transform.Find("Joint/PlayerCamera").TransformDirection(Vector3.forward), out hit, 5f))
         {
             GameObject go = hit.transform.gameObject;
             int interactLayer = LayerMask.NameToLayer("interact");
-            if(go.layer == interactLayer)
+            if (go.layer == interactLayer)
             {
-                GameObject gop = hit.transform.parent.gameObject;
+                GameObject gop = hit.transform.root.gameObject;
+
                 //highlight
 
                 //interact
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if(gop.tag == "key")
+                    if (gop.tag == "key")
                     {
                         Key keyScript = gop.GetComponent<Key>();
                         keyScript.Turn(go.transform);
                     }
+                    if (gop.tag == "lock")
+                    {
+                        Lock lockScript = gop.GetComponent<Lock>();
+                        if (lockScript.unlocked = true)
+                        {
+                            lockScript.Open();
+                        }
+                    }
                 }
+
             }
-            
         }
     }
 

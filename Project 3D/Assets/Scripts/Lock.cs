@@ -7,6 +7,7 @@ public class Lock : MonoBehaviour
     public string code = "0000";
     public GameObject key;
     Key keyScript;
+    public bool unlocked;
     private void Start()
     {
         code = code.Substring(0, key.transform.childCount);
@@ -23,9 +24,17 @@ public class Lock : MonoBehaviour
         {
             if (keyScript.code == code)
             {
-                //open sesame
-                Debug.Log("and open!");
+                unlocked = true;
+            }
+            else
+            {
+                unlocked = false;
             }
         }
+    }
+     public void Open()
+    {
+        Debug.Log("open!");
+        Destroy(gameObject);
     }
 }
