@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
-       // audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
+       //audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
     void Start()
     {
@@ -21,8 +21,8 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickStart()
     {
-       // audioManager.PlaySFX(audioManager.buttonClick);
-       // yeild return new WaitForSeconds(3);
+       //audioManager.PlaySFX(audioManager.buttonClick);
+       //yeild return new WaitForSeconds(3);
         SceneManager.LoadScene("Level1");
     }
 
