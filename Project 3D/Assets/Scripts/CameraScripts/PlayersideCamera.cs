@@ -35,8 +35,6 @@ public class PlayersideCamera : MonoBehaviour
 
     private void Start()
     {
-        GameOverScreen = GameObject.Find("GameOverPanel");
-        GameOverScreen.SetActive(false);
         flash = GameObject.Find("Flash");
         animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
