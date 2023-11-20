@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -51,19 +52,20 @@ public class PlayersideCamera : MonoBehaviour
         cam = camcam.GetComponent<CameraCamera>();
         window = polaroid.transform.Find("Canvas/Panel/Window").gameObject.GetComponent<RawImage>();
         int hidden = LayerMask.NameToLayer("hidden");
+        int player = LayerMask.NameToLayer("player");
         foreach (GameObject obj in films)
         {
             foreach (Transform child in obj.transform)
             {
                 if (child.gameObject.GetComponent<Collider>() != null)
                 {
-                    child.gameObject.GetComponent<Collider>().isTrigger = true;
+                    child.gameObject.GetComponent<Collider>().excludeLayers = player;
                 }
                 child.gameObject.layer = hidden;
             }
             if (obj.GetComponent<Collider>() != null)
             {
-                obj.GetComponent<Collider>().isTrigger = true;
+                obj.gameObject.GetComponent<Collider>().excludeLayers = player;
             }
             obj.layer = hidden;
         }
@@ -78,6 +80,8 @@ public class PlayersideCamera : MonoBehaviour
             polaroid.SetActive(true);
             cam.Take();
             int hidden = LayerMask.NameToLayer("hidden");
+            LayerMask player = LayerMask.GetMask("player");
+            Debug.Log(player);
             bool flash = false;
             foreach (GameObject obj in films)
             {
@@ -86,14 +90,18 @@ public class PlayersideCamera : MonoBehaviour
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
                     {
-                        obj.GetComponent<Collider>().isTrigger = false;
+                        //Physics.IgnoreCollision(obj.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), false);
+                        Debug.Log("Ignore false");
+                        obj.gameObject.GetComponent<Collider>().excludeLayers = 0;
                     }
                     obj.layer = 0;
                     foreach (Transform child in obj.transform)
                     {
                         if (child.gameObject.GetComponent<Collider>() != null)
                         {
-                            child.gameObject.GetComponent<Collider>().isTrigger = false;
+                            //Physics.IgnoreCollision(child.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), false);
+                            Debug.Log("Ignore child false");
+                            child.gameObject.GetComponent<Collider>().excludeLayers = 0;
                         }
                         child.gameObject.layer = 0;
                     }
@@ -103,14 +111,16 @@ public class PlayersideCamera : MonoBehaviour
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
                     {
-                        obj.GetComponent<Collider>().isTrigger = true;
+                        //Physics.IgnoreCollision(obj.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), true);
+                        obj.gameObject.GetComponent<Collider>().excludeLayers = player;
                     }
                     obj.layer = hidden;
                     foreach (Transform child in obj.transform)
                     {
                         if (child.gameObject.GetComponent<Collider>() != null)
                         {
-                            child.gameObject.GetComponent<Collider>().isTrigger = true;
+                            //Physics.IgnoreCollision(child.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), true);
+                            child.gameObject.GetComponent<Collider>().excludeLayers = player;
                         }
                         child.gameObject.layer = hidden;
                     }
