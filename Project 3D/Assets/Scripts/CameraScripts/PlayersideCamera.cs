@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -25,6 +26,19 @@ public class PlayersideCamera : MonoBehaviour
         }
     }
 
+    GameObject[] FindGameObjectsWithLayer(int layer) { 
+        GameObject[] goArray = FindObjectsOfType(typeof(GameObject)) as GameObject[]; 
+        var goList = new List<GameObject>(); 
+        for (int i = 0; i < goArray.Length; i++) { 
+            if (goArray[i].layer == layer) {
+                goList.Add(goArray[i]);
+            } 
+        } 
+        if (goList.Count == 0) 
+        { return null; } 
+        return goList.ToArray(); 
+    }
+
     [SerializeField] GameObject polaroid;
     [SerializeField] GameObject camcam;
     [SerializeField] CameraCamera cam;
@@ -34,8 +48,12 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] List<GameObject> clues;
     public GameObject GameOverScreen;
 
+    [SerializeField] GameObject[] interacts;
+    [SerializeField] float outlineWidth = 3f;
+
     private void Start()
     {
+        interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
         flash = GameObject.Find("Flash");
         animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
@@ -173,9 +191,28 @@ public class PlayersideCamera : MonoBehaviour
             if (go.layer == interactLayer)
             {
                 GameObject gop = hit.transform.root.gameObject;
-
+                foreach (GameObject obj in interacts)
+                {
+                    if (obj != null)
+                    {
+                        if (obj.GetComponent<Outline>() != null && obj.GetComponent<Outline>().enabled)
+                        {
+                            obj.GetComponent<Outline>().enabled = false;
+                        }
+                    }
+                }
                 //highlight
-
+                if (go.GetComponent<Outline>() != null)
+                {
+                    go.GetComponent<Outline>().enabled = true;
+                }
+                else
+                {
+                    var outline = go.AddComponent<Outline>();
+                    outline.OutlineMode = Outline.Mode.OutlineVisible;
+                    outline.OutlineColor = Color.white;
+                    outline.OutlineWidth = outlineWidth;
+                }
                 //interact
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -193,7 +230,19 @@ public class PlayersideCamera : MonoBehaviour
                         }
                     }
                 }
-
+            }
+            else
+            {
+                foreach(GameObject obj in interacts)
+                {
+                    if (obj != null)
+                    {
+                        if (obj.GetComponent<Outline>() != null && obj.GetComponent<Outline>().enabled)
+                        {
+                            obj.GetComponent<Outline>().enabled = false;
+                        }
+                    }
+                }
             }
         }
     }

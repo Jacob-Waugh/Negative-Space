@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    AudioManager audioManager;
-    
+    //AudioManager.instance
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
     public void RetryButton()
     {
         SceneManager.LoadScene("Level1");
