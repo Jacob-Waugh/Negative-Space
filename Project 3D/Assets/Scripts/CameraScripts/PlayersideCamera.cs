@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -33,9 +31,12 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] List<GameObject> films;
     public List<GameObject> enemies;
     [SerializeField] List<GameObject> clues;
+    public GameObject GameOverScreen;
 
     private void Start()
     {
+        GameOverScreen = GameObject.Find("GameOverPanel");
+        GameOverScreen.SetActive(false);
         flash = GameObject.Find("Flash");
         animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
@@ -82,7 +83,7 @@ public class PlayersideCamera : MonoBehaviour
             bool flash = false;
             foreach (GameObject obj in films)
             {
-                
+
                 if (tryPicture(obj.transform.position))
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
@@ -117,7 +118,7 @@ public class PlayersideCamera : MonoBehaviour
                     }
                 }
             }
-            foreach(GameObject obj in enemies)
+            foreach (GameObject obj in enemies)
             {
                 if (tryPicture(obj.transform.position))
                 {
@@ -125,7 +126,7 @@ public class PlayersideCamera : MonoBehaviour
                     flash = true;
                 }
             }
-            foreach(GameObject obj in clues)
+            foreach (GameObject obj in clues)
             {
                 HiddenObject hideScript = obj.GetComponent<HiddenObject>();
                 if (tryPicture(obj.GetComponent<Collider>().bounds.center))
@@ -152,31 +153,40 @@ public class PlayersideCamera : MonoBehaviour
             {
                 AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             }
-            
+
         }
         //said I was gonna leave this for camera stuff, that was a LIE I do not want to touch playercontroller
-        
+
         RaycastHit hit;
-        if (Physics.Raycast(transform.Find("Joint/PlayerCamera").transform.position, transform.Find("Joint/PlayerCamera").TransformDirection(Vector3.forward), out hit, 30f))
+        if (Physics.Raycast(transform.Find("Joint/PlayerCamera").transform.position, transform.Find("Joint/PlayerCamera").TransformDirection(Vector3.forward), out hit, 5f))
         {
             GameObject go = hit.transform.gameObject;
             int interactLayer = LayerMask.NameToLayer("interact");
-            if(go.layer == interactLayer)
+            if (go.layer == interactLayer)
             {
-                GameObject gop = hit.transform.parent.gameObject;
+                GameObject gop = hit.transform.root.gameObject;
+
                 //highlight
 
                 //interact
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if(gop.tag == "key")
+                    if (gop.tag == "key")
                     {
                         Key keyScript = gop.GetComponent<Key>();
                         keyScript.Turn(go.transform);
                     }
+                    if (gop.tag == "lock")
+                    {
+                        Lock lockScript = gop.GetComponent<Lock>();
+                        if (lockScript.unlocked == true)
+                        {
+                            lockScript.Open();
+                        }
+                    }
                 }
+
             }
-            
         }
     }
 
@@ -199,8 +209,9 @@ public class PlayersideCamera : MonoBehaviour
         if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
         {
             RaycastHit hit;
-            if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500))
+            if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500f))
             {
+                Debug.Log(hit.transform.gameObject);
                 Debug.DrawRay(camcam.transform.position, pos - camcam.transform.position, UnityEngine.Color.yellow, 1);
                 if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy" && hit.transform.gameObject.tag != "clue")
                 {
@@ -220,5 +231,15 @@ public class PlayersideCamera : MonoBehaviour
             enemies.Remove(enemy);
             Destroy(enemy);
         }
+    }
+    public void Die()
+    {
+        StartCoroutine(DieCoroutine());
+    }
+    IEnumerator DieCoroutine()
+    {
+        AudioManager.instance.PlaySFX(AudioManager.instance.death);
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("GameOver");
     }
 }
