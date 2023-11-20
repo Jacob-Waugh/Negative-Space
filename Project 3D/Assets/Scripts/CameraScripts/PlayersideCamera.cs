@@ -239,7 +239,7 @@ public class PlayersideCamera : MonoBehaviour
     IEnumerator DieCoroutine()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.death);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("GameOver");
     }
 }
