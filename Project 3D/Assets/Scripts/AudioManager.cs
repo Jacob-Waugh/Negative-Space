@@ -60,6 +60,14 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       // if(Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.D))
+        //{
+        //    SFXSource.clip=footsteps;
+        //    SFXSource.Play();
+        //}
+        
+        
+
         
     }
     public void PlaySFX(AudioClip clip)

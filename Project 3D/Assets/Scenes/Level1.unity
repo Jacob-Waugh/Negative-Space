@@ -154,7 +154,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -7852,7 +7852,7 @@ MonoBehaviour:
   cameraClick: {fileID: 8300000, guid: 270abb0a0c5932c4a8cef1477dffe500, type: 3}
   cameraFlash: {fileID: 8300000, guid: 4734bd72d7f06b24f936601718a2c52d, type: 3}
   transition: {fileID: 8300000, guid: 1bca48163766b4048a7024cb218dafb4, type: 3}
-  buttonClick: {fileID: 0}
+  buttonClick: {fileID: 8300000, guid: 8e6d08ab4fb31b7478d2de68e1886836, type: 3}
 --- !u!4 &1255304102
 Transform:
   m_ObjectHideFlags: 0
