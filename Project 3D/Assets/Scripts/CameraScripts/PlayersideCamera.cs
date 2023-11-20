@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -33,9 +31,12 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] List<GameObject> films;
     public List<GameObject> enemies;
     [SerializeField] List<GameObject> clues;
+    public GameObject GameOverScreen;
 
     private void Start()
     {
+        GameOverScreen = GameObject.Find("GameOverPanel");
+        GameOverScreen.SetActive(false);
         flash = GameObject.Find("Flash");
         animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
@@ -178,7 +179,7 @@ public class PlayersideCamera : MonoBehaviour
                     if (gop.tag == "lock")
                     {
                         Lock lockScript = gop.GetComponent<Lock>();
-                        if (lockScript.unlocked = true)
+                        if (lockScript.unlocked == true)
                         {
                             lockScript.Open();
                         }
@@ -208,8 +209,9 @@ public class PlayersideCamera : MonoBehaviour
         if (point.x < 1 && point.y < 1 && point.x > 0 && point.y > 0 && point.z > 0)
         {
             RaycastHit hit;
-            if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500))
+            if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500f))
             {
+                Debug.Log(hit.transform.gameObject);
                 Debug.DrawRay(camcam.transform.position, pos - camcam.transform.position, UnityEngine.Color.yellow, 1);
                 if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy" && hit.transform.gameObject.tag != "clue")
                 {
@@ -229,5 +231,15 @@ public class PlayersideCamera : MonoBehaviour
             enemies.Remove(enemy);
             Destroy(enemy);
         }
+    }
+    public void Die()
+    {
+        StartCoroutine(DieCoroutine());
+    }
+    IEnumerator DieCoroutine()
+    {
+        AudioManager.instance.PlaySFX(AudioManager.instance.death);
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("GameOver");
     }
 }

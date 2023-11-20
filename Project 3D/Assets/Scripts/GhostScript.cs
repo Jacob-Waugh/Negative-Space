@@ -9,6 +9,7 @@ public class GhostScript : MonoBehaviour
 {
     GameObject player;
     public float speed = 2f;
+    
     private void Start()
     {
         player = GameObject.Find("FirstPersonController");
@@ -21,8 +22,9 @@ public class GhostScript : MonoBehaviour
         {
             PlayersideCamera.instance.enemies.Remove(this.gameObject);
             Destroy(this.gameObject);
-            string currentSceneName = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(currentSceneName);
+            PlayersideCamera.instance.Die();
+            //string currentSceneName = SceneManager.GetActiveScene().name;
+            //SceneManager.LoadScene(currentSceneName);
         }
     }
 }
