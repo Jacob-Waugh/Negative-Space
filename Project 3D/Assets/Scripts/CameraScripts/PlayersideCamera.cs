@@ -4,8 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using Autodesk.Fbx;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -41,6 +40,8 @@ public class PlayersideCamera : MonoBehaviour
 
     [SerializeField] GameObject polaroid;
     [SerializeField] GameObject camcam;
+    [SerializeField] Transform poofParticles;
+    public GameObject poltergeist;
     [SerializeField] CameraCamera cam;
     [SerializeField] RawImage window;
     [SerializeField] List<GameObject> films;
@@ -108,8 +109,6 @@ public class PlayersideCamera : MonoBehaviour
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
                     {
-                        //Physics.IgnoreCollision(obj.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), false);
-                        Debug.Log("Ignore false");
                         obj.gameObject.GetComponent<Collider>().excludeLayers = 0;
                     }
                     obj.layer = 0;
@@ -117,8 +116,6 @@ public class PlayersideCamera : MonoBehaviour
                     {
                         if (child.gameObject.GetComponent<Collider>() != null)
                         {
-                            //Physics.IgnoreCollision(child.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), false);
-                            Debug.Log("Ignore child false");
                             child.gameObject.GetComponent<Collider>().excludeLayers = 0;
                         }
                         child.gameObject.layer = 0;
@@ -129,7 +126,6 @@ public class PlayersideCamera : MonoBehaviour
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
                     {
-                        //Physics.IgnoreCollision(obj.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), true);
                         obj.gameObject.GetComponent<Collider>().excludeLayers = player;
                     }
                     obj.layer = hidden;
@@ -137,7 +133,6 @@ public class PlayersideCamera : MonoBehaviour
                     {
                         if (child.gameObject.GetComponent<Collider>() != null)
                         {
-                            //Physics.IgnoreCollision(child.gameObject.GetComponent<Collider>(), this.gameObject.GetComponent<Collider>(), true);
                             child.gameObject.GetComponent<Collider>().excludeLayers = player;
                         }
                         child.gameObject.layer = hidden;
@@ -146,6 +141,26 @@ public class PlayersideCamera : MonoBehaviour
             }
             foreach (GameObject obj in enemies)
             {
+                if (obj.GetComponent<PoltergeistScript>())
+                {
+                    Debug.Log("polt active");
+                    PoltergeistScript polt = obj.GetComponent<PoltergeistScript>();
+                    polt.active = true;
+                    int poltLayer = LayerMask.NameToLayer("polt");
+                    if (obj.gameObject.GetComponent<Collider>() != null)
+                    {
+                        obj.gameObject.GetComponent<Collider>().excludeLayers = 0;
+                    }
+                    obj.layer = poltLayer;
+                    foreach (Transform child in obj.transform)
+                    {
+                        if (child.gameObject.GetComponent<Collider>() != null)
+                        {
+                            child.gameObject.GetComponent<Collider>().excludeLayers = 0;
+                        }
+                        child.gameObject.layer = poltLayer;
+                    }
+                }
                 if (tryPicture(obj.transform.position))
                 {
                     hitEnemy(obj);
@@ -285,8 +300,34 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (enemy.layer == LayerMask.NameToLayer("ghosts"))
         {
+            if (poofParticles)
+            {
+                GameObject explode = Instantiate(poofParticles, enemy.transform.position, enemy.transform.rotation).gameObject;
+                Destroy(explode, 2.0f);
+            }
             enemies.Remove(enemy);
             Destroy(enemy);
+        }
+        int hidden = LayerMask.NameToLayer("hidden");
+        LayerMask player = LayerMask.GetMask("player");
+        if (enemy.GetComponent<PoltergeistScript>())
+        {
+            PoltergeistScript polt = enemy.GetComponent<PoltergeistScript>();
+            polt.active = false;
+            Debug.Log("polt inactive");
+            if (enemy.gameObject.GetComponent<Collider>() != null)
+            {
+                enemy.gameObject.GetComponent<Collider>().excludeLayers = player;
+            }
+            enemy.layer = hidden;
+            foreach (Transform child in enemy.transform)
+            {
+                if (child.gameObject.GetComponent<Collider>() != null)
+                {
+                    child.gameObject.GetComponent<Collider>().excludeLayers = player;
+                }
+                child.gameObject.layer = hidden;
+            }
         }
     }
     public void Die()

@@ -72,7 +72,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 1911
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 579c104a797c44b41a59e62eaa5508ee, type: 2}
   m_TargetDisplay: 0
@@ -455,11 +455,16 @@ MonoBehaviour:
   flash: {fileID: 0}
   polaroid: {fileID: 6038309935671246016}
   camcam: {fileID: 2475884426487472988}
+  poofParticles: {fileID: 5037075953101416444, guid: ae10d156a84005c45a906eb3a1cb31f3, type: 3}
+  poltergeist: {fileID: 3298596884393389528, guid: bf3c677d80fdfef4e85a949ebd2ff8ac, type: 3}
   cam: {fileID: 0}
   window: {fileID: 0}
   films: []
   enemies: []
   clues: []
+  GameOverScreen: {fileID: 0}
+  interacts: []
+  outlineWidth: 3
 --- !u!1 &4459864850190357393
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +740,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 311
+    m_Bits: 1847
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

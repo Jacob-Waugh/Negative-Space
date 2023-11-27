@@ -23,8 +23,6 @@ public class GhostScript : MonoBehaviour
             PlayersideCamera.instance.enemies.Remove(this.gameObject);
             Destroy(this.gameObject);
             PlayersideCamera.instance.Die();
-            //string currentSceneName = SceneManager.GetActiveScene().name;
-            //SceneManager.LoadScene(currentSceneName);
         }
     }
 }
