@@ -292,3 +292,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   active: 1
+  sparkling: 0
+  sparklePrefab: {fileID: 2720939291226786919, guid: 83a9b269897ef47459e6e15c1026923d, type: 3}
+  sparkle: {fileID: 0}

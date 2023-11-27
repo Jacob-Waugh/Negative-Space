@@ -25,6 +25,7 @@ public class CameraCamera : MonoBehaviour
         RenderTexture.active = null;
         if (startupped)
         {
+            Debug.Log((PlayersideCamera.instance));
             PlayersideCamera.instance.PictureChange(LastImage);
         }
         else

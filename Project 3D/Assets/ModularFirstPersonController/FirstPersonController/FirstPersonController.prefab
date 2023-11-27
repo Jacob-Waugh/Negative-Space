@@ -457,12 +457,14 @@ MonoBehaviour:
   camcam: {fileID: 2475884426487472988}
   poofParticles: {fileID: 5037075953101416444, guid: ae10d156a84005c45a906eb3a1cb31f3, type: 3}
   poltergeist: {fileID: 3298596884393389528, guid: bf3c677d80fdfef4e85a949ebd2ff8ac, type: 3}
+  ghost: {fileID: 9190743738702687488, guid: 58e4049a7fe3da34f944b97032a452ae, type: 3}
   cam: {fileID: 0}
   window: {fileID: 0}
   films: []
   enemies: []
   clues: []
   GameOverScreen: {fileID: 0}
+  spawnBox: {fileID: 0}
   interacts: []
   outlineWidth: 3
 --- !u!1 &4459864850190357393

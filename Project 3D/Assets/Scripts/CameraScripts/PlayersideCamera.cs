@@ -40,20 +40,24 @@ public class PlayersideCamera : MonoBehaviour
 
     [SerializeField] GameObject polaroid;
     [SerializeField] GameObject camcam;
-    [SerializeField] Transform poofParticles;
+    public Transform poofParticles;
     public GameObject poltergeist;
+    public GameObject ghost;
     [SerializeField] CameraCamera cam;
     [SerializeField] RawImage window;
     [SerializeField] List<GameObject> films;
     public List<GameObject> enemies;
     [SerializeField] List<GameObject> clues;
     public GameObject GameOverScreen;
+    public BoxCollider spawnBox;
 
     [SerializeField] GameObject[] interacts;
     [SerializeField] float outlineWidth = 3f;
 
     private void Start()
     {
+        
+        spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
         interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
         flash = GameObject.Find("Flash");
         animator = flash.GetComponent<Animator>();
@@ -300,13 +304,9 @@ public class PlayersideCamera : MonoBehaviour
     {
         if (enemy.layer == LayerMask.NameToLayer("ghosts"))
         {
-            if (poofParticles)
-            {
-                GameObject explode = Instantiate(poofParticles, enemy.transform.position, enemy.transform.rotation).gameObject;
-                Destroy(explode, 2.0f);
-            }
+            
             enemies.Remove(enemy);
-            Destroy(enemy);
+            enemy.GetComponent<GhostScript>().Die();
         }
         int hidden = LayerMask.NameToLayer("hidden");
         LayerMask player = LayerMask.GetMask("player");
@@ -329,6 +329,22 @@ public class PlayersideCamera : MonoBehaviour
                 child.gameObject.layer = hidden;
             }
         }
+    }
+    public void SpawnGhost()
+    {
+        Debug.Log("Spawning");
+        StartCoroutine(SpawnCoroutine(ghost));
+    }
+    IEnumerator SpawnCoroutine(GameObject enemy)
+    {
+        yield return new WaitForSeconds(Random.Range(1,5));
+        AudioManager.instance.PlaySFX(AudioManager.instance.clock);
+        Bounds bounds = spawnBox.bounds;
+        GameObject newguy = Instantiate(ghost, new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            Random.Range(bounds.min.z, bounds.max.z)), Quaternion.identity);
+        enemies.Add(newguy);
     }
     public void Die()
     {
