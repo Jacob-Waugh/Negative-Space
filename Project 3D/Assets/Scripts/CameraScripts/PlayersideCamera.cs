@@ -93,6 +93,7 @@ public class PlayersideCamera : MonoBehaviour
             obj.layer = hidden;
         }
         polaroid.SetActive(false);
+        SpawnGhost();
     }
     private void Update()
     {
