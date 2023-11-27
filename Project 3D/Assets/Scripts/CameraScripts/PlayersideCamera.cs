@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Autodesk.Fbx;
+using Unity.VisualScripting;
 
 public class PlayersideCamera : MonoBehaviour
 {
@@ -340,11 +341,19 @@ public class PlayersideCamera : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(1,5));
         AudioManager.instance.PlaySFX(AudioManager.instance.clock);
-        Bounds bounds = spawnBox.bounds;
-        GameObject newguy = Instantiate(ghost, new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z)), Quaternion.identity);
+        GameObject newguy;
+        if (spawnBox != null)
+        {
+            Bounds bounds = spawnBox.bounds;
+            newguy = Instantiate(ghost, new Vector3(
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.y, bounds.max.y),
+                Random.Range(bounds.min.z, bounds.max.z)), Quaternion.identity);
+        }
+        else
+        {
+            newguy = Instantiate(ghost, Vector3.zero, Quaternion.identity);
+        }
         enemies.Add(newguy);
     }
     public void Die()
