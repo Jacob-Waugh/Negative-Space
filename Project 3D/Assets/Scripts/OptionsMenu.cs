@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class OptionsMenu : MonoBehaviour
 {
@@ -56,4 +57,9 @@ public class OptionsMenu : MonoBehaviour
  {
     Screen.fullScreen=isFullscreen;
  }
+
+ public void OnClickBack()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
