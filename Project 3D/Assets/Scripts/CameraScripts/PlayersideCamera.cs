@@ -111,7 +111,7 @@ public class PlayersideCamera : MonoBehaviour
             foreach (GameObject obj in films)
             {
 
-                if (tryPicture(obj.transform.position))
+                if (tryPicture(obj.GetComponent<Collider>().bounds.center))
                 {
                     if (obj.gameObject.GetComponent<Collider>() != null)
                     {
@@ -167,7 +167,7 @@ public class PlayersideCamera : MonoBehaviour
                         child.gameObject.layer = poltLayer;
                     }
                 }
-                if (tryPicture(obj.transform.position))
+                if (tryPicture(obj.GetComponent<Collider>().bounds.center))
                 {
                     hitEnemy(obj);
                     flash = true;

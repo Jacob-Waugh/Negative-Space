@@ -518,6 +518,11 @@ public class FirstPersonController : MonoBehaviour
             }
             // Applies HeadBob movement
             joint.localPosition = new Vector3(jointOriginalPos.x + Mathf.Sin(timer) * bobAmount.x, jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y, jointOriginalPos.z + Mathf.Sin(timer) * bobAmount.z);
+            if(Mathf.Sin(timer) == -1)
+            {
+                Debug.Log("stepping");
+                AudioManager.instance.PlaySFX(AudioManager.instance.footstep);
+            }
         }
         else
         {

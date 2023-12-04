@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
+    [SerializeField] AudioSource clockSource;
 
     public AudioClip backgroundMusic;
     public AudioClip mainMenuMusic;
@@ -34,6 +35,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip cameraFlash;
     public AudioClip transition;
     public AudioClip buttonClick;
+    public AudioClip footstep;
 
     // Start is called before the first frame update
     void Start()

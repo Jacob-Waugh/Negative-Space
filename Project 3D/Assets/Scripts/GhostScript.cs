@@ -20,7 +20,7 @@ public class GhostScript : MonoBehaviour
     {
         transform.LookAt(player.transform);
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, player.transform.position) < 0.5f)
+        if (Vector3.Distance(transform.position, player.transform.position) < 0.7f)
         {
             PlayersideCamera.instance.enemies.Remove(gameObject);
             Destroy(gameObject);
