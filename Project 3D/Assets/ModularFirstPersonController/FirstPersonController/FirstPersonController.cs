@@ -100,6 +100,7 @@ public class FirstPersonController : MonoBehaviour
 
     // Internal Variables
     private bool isGrounded = false;
+    private bool land = false;
 
     #endregion
 
@@ -128,6 +129,7 @@ public class FirstPersonController : MonoBehaviour
     // Internal Variables
     private Vector3 jointOriginalPos;
     private float timer = 0;
+    private bool footstepped;
 
     #endregion
 
@@ -452,10 +454,16 @@ public class FirstPersonController : MonoBehaviour
         {
             Debug.DrawRay(origin, direction * distance, Color.red);
             isGrounded = true;
+            if (!land)
+            {
+                land = true;
+                AudioManager.instance.PlaySFX(AudioManager.instance.footstep);
+            }
         }
         else
         {
             isGrounded = false;
+            land = false;
         }
     }
 
@@ -518,10 +526,18 @@ public class FirstPersonController : MonoBehaviour
             }
             // Applies HeadBob movement
             joint.localPosition = new Vector3(jointOriginalPos.x + Mathf.Sin(timer) * bobAmount.x, jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y, jointOriginalPos.z + Mathf.Sin(timer) * bobAmount.z);
-            if(Mathf.Sin(timer) == -1)
+            if(Mathf.Sin(timer) < -0.8)
             {
-                Debug.Log("stepping");
-                AudioManager.instance.PlaySFX(AudioManager.instance.footstep);
+                if (!footstepped && isGrounded)
+                {
+                    Debug.Log("stepping");
+                    AudioManager.instance.PlaySFX(AudioManager.instance.footstep);
+                    footstepped = true;
+                }
+            }
+            else
+            {
+                footstepped = false;
             }
         }
         else

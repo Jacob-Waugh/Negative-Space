@@ -76,4 +76,12 @@ public class AudioManager : MonoBehaviour
     {
         SFXSource.PlayOneShot(clip);
     }
+    public void ClockPlay()
+    {
+        clockSource.Play();
+    }
+    public void ClockStop()
+    {
+        clockSource.Stop();
+    }
 }
