@@ -4,17 +4,18 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
  
  public AudioMixer audioMixer;
- public Dropdown resolutionDropdown;
+ public TMP_Dropdown resolutionDropdown;
  Resolution[] resolutions;
 
- void start()
+ void Start()
 {
-    resolutions= Screen.resolutions;
+    resolutions = Screen.resolutions;
     resolutionDropdown.ClearOptions();
 
     List<string> options = new List<string>();
