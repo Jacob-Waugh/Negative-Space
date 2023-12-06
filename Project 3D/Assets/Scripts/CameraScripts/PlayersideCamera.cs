@@ -103,6 +103,7 @@ public class PlayersideCamera : MonoBehaviour
         if (dead)
         {
             DataHolder.instance.paused = true;
+            dead = false;
         }
         if (Input.GetButtonDown("Fire1") && !DataHolder.instance.paused)
         {
