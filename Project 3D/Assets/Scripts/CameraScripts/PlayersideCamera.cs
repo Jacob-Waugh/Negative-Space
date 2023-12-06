@@ -51,13 +51,15 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] List<GameObject> clues;
     public GameObject GameOverScreen;
     public BoxCollider spawnBox;
+    public bool dead = false;
 
     [SerializeField] GameObject[] interacts;
     [SerializeField] float outlineWidth = 3f;
 
     private void Start()
     {
-        
+
+        DataHolder.instance.updateScene();
         spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
         interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
         flash = GameObject.Find("Flash");
@@ -98,7 +100,11 @@ public class PlayersideCamera : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (dead)
+        {
+            DataHolder.instance.paused = true;
+        }
+        if (Input.GetButtonDown("Fire1") && !DataHolder.instance.paused)
         {
             animator.Play("Flash", -1, 0f);
             AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
@@ -266,6 +272,21 @@ public class PlayersideCamera : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!DataHolder.instance.paused)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                DataHolder.instance.paused = true;
+                //pause appear
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                DataHolder.instance.paused = false;
+                //pause disappear
+            }
+        }
     }
 
     public void PictureChange(Texture2D image)
@@ -359,11 +380,12 @@ public class PlayersideCamera : MonoBehaviour
     public void Die()
     {
         StartCoroutine(DieCoroutine());
+        dead = true;
     }
     IEnumerator DieCoroutine()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.death);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("GameOver");
     }
 }

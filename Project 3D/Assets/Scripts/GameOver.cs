@@ -11,10 +11,11 @@ public class GameOver : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
+        DataHolder.instance.paused = false;
     }
     public void RetryButton()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(DataHolder.instance.lastSceneIndex);
     }
     public void OptionsButton()
     {

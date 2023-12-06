@@ -22,17 +22,20 @@ public class Orb : MonoBehaviour
     }
     private void Update()
     {
-        var step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, target, step);
-        if (Vector3.Distance(transform.position, target) < 0.001f)
+        if (!DataHolder.instance.paused)
         {
-            if (target != start)
+            var step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, target, step);
+            if (Vector3.Distance(transform.position, target) < 0.001f)
             {
-                CheckTarget(start);
-            }
-            else
-            {
-                CheckTarget(pointloc);
+                if (target != start)
+                {
+                    CheckTarget(start);
+                }
+                else
+                {
+                    CheckTarget(pointloc);
+                }
             }
         }
     }
