@@ -15,6 +15,7 @@ public class OptionsMenu : MonoBehaviour
 
  void Start()
 {
+    DataHolder.instance.updateScene();
     resolutions = Screen.resolutions;
     resolutionDropdown.ClearOptions();
 
@@ -61,6 +62,6 @@ public class OptionsMenu : MonoBehaviour
 
  public void OnClickBack()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(DataHolder.instance.lastSceneIndex);
     }
 }

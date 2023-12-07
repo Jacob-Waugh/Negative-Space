@@ -18,13 +18,16 @@ public class GhostScript : MonoBehaviour
     }
     private void Update()
     {
-        transform.LookAt(player.transform);
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, player.transform.position) < 0.7f)
+        if (!DataHolder.instance.paused)
         {
-            PlayersideCamera.instance.enemies.Remove(gameObject);
-            Destroy(gameObject);
-            PlayersideCamera.instance.Die();
+            transform.LookAt(player.transform);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, player.transform.position) < 0.7f)
+            {
+                PlayersideCamera.instance.enemies.Remove(gameObject);
+                Destroy(gameObject);
+                PlayersideCamera.instance.Die();
+            }
         }
     }
     public void Die()

@@ -19,29 +19,32 @@ public class PoltergeistScript : MonoBehaviour
     }
     private void Update()
     {
-        if (active)
+        if (!DataHolder.instance.paused)
         {
-            if (sparkling)
+            if (active)
             {
-                Destroy(sparkle);
-                sparkling = false;
+                if (sparkling)
+                {
+                    Destroy(sparkle);
+                    sparkling = false;
+                }
+                transform.LookAt(player.transform);
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, player.transform.position) < 0.5f)
+                {
+                    PlayersideCamera.instance.enemies.Remove(this.gameObject);
+                    Destroy(this.gameObject);
+                    PlayersideCamera.instance.Die();
+                }
             }
-            transform.LookAt(player.transform);
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, player.transform.position) < 0.5f)
+            else
             {
-                PlayersideCamera.instance.enemies.Remove(this.gameObject);
-                Destroy(this.gameObject);
-                PlayersideCamera.instance.Die();
-            }
-        }
-        else
-        {
-            if (!sparkling)
-            {
-                sparkle = Instantiate(sparklePrefab, transform.position, Quaternion.identity);
-                sparkle.layer = 0;
-                sparkling = true;
+                if (!sparkling)
+                {
+                    sparkle = Instantiate(sparklePrefab, transform.position, Quaternion.identity);
+                    sparkle.layer = 0;
+                    sparkling = true;
+                }
             }
         }
     }
