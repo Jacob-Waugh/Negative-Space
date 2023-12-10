@@ -8,7 +8,7 @@ using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
- 
+ AudioManager audioManager;
  public AudioMixer audioMixer;
  public TMP_Dropdown resolutionDropdown;
  Resolution[] resolutions;
