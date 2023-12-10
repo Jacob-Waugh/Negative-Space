@@ -12,6 +12,7 @@ TagManager:
   - clue
   - key
   - lock
+  - interact
   layers:
   - Default
   - TransparentFX

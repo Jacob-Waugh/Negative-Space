@@ -263,13 +263,16 @@ public class PlayersideCamera : MonoBehaviour
             }
             else
             {
-                foreach(GameObject obj in interacts)
+                if (interacts != null)
                 {
-                    if (obj != null)
+                    foreach (GameObject obj in interacts)
                     {
-                        if (obj.GetComponent<Outline>() != null && obj.GetComponent<Outline>().enabled)
+                        if (obj != null)
                         {
-                            obj.GetComponent<Outline>().enabled = false;
+                            if (obj.GetComponent<Outline>() != null && obj.GetComponent<Outline>().enabled)
+                            {
+                                obj.GetComponent<Outline>().enabled = false;
+                            }
                         }
                     }
                 }
