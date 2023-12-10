@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 4459864850019384741}
   - component: {fileID: 4459864850019384740}
   - component: {fileID: 2999138781844018931}
+  - component: {fileID: -7497319018917451153}
   m_Layer: 7
   m_Name: FirstPersonController
   m_TagString: Player
@@ -510,8 +511,32 @@ MonoBehaviour:
   clues: []
   GameOverScreen: {fileID: 0}
   spawnBox: {fileID: 0}
+  dead: 0
+  pauseMenu: {fileID: 0}
+  cutsceneHandler: {fileID: 0}
   interacts: []
   outlineWidth: 3
+--- !u!95 &-7497319018917451153
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459864850019384750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2644ead4842e87b4bace46f51dcc501b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4459864850190357393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1198,7 @@ Transform:
   m_GameObject: {fileID: 6038309935671246016}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03223872, y: -0.2846865, z: -0.1078066, w: 0.95199376}
-  m_LocalPosition: {x: 1.1060002, y: -0.361, z: 1.3150002}
+  m_LocalPosition: {x: 1.1060002, y: -0.361, z: 1.315}
   m_LocalScale: {x: 0.0051132147, y: 0.39480898, z: 0.35478878}
   m_ConstrainProportionsScale: 0
   m_Children:
