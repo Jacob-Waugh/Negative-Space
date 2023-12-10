@@ -64,7 +64,7 @@ public class PlayersideCamera : MonoBehaviour
         DataHolder.instance.updateScene();
         spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
         interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
-        flash = GameObject.Find("Flash");
+        flash = GameObject.Find("Canvas/Flash");
         animator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
         enemies = GameObject.FindGameObjectsWithTag("enemy").ToList();

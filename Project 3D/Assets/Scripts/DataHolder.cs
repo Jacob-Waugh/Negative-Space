@@ -10,16 +10,7 @@ public class DataHolder : MonoBehaviour
     
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(this.gameObject);
-            instance = null;
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        instance = this;
     }
     public Input input;
     public int lastSceneIndex;
