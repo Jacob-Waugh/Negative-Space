@@ -373,8 +373,15 @@ public class FirstPersonController : MonoBehaviour
         if (playerCanMove && !DataHolder.instance.paused)
         {
             // Calculate how fast we should be moving
-            Vector3 targetVelocity = new Vector3(/*DataHolder.instance.input.x ?? */Input.GetAxis("Horizontal"), 0, /*DataHolder.instance.input.y ?? */Input.GetAxis("Vertical"));
-
+            Vector3 targetVelocity;
+            if (DataHolder.instance.input.x != null && DataHolder.instance.input.y != null)
+            {
+                targetVelocity = new Vector3(DataHolder.instance.input.x ?? 0, 0, DataHolder.instance.input.y ?? 0);
+            }
+            else
+            {
+                targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            }
             // Checks if player is walking and isGrounded
             // Will allow head bob
             if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)

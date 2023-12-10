@@ -10,9 +10,20 @@ public class DataHolder : MonoBehaviour
     
     private void Awake()
     {
-        instance = this;
+        if (instance != null)
+        {
+            instance.updateScene();
+            Destroy(instance);
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
-    public Input input;
+    public Input input = new Input();
     public int lastSceneIndex;
     public int sceneIndex;
     public bool paused = false;
@@ -20,25 +31,6 @@ public class DataHolder : MonoBehaviour
     {
         public float? x;
         public float? y;
-        public bool empty
-        {
-            get
-            {
-                if(y == null && x == null)
-                {
-                    return true;
-                }
-                return false;
-            }
-            set
-            {
-                if(value == true)
-                {
-                    x = null;
-                    y = null;
-                }
-            }
-        }
         public void clear()
         {
             x = 0;
@@ -51,7 +43,7 @@ public class DataHolder : MonoBehaviour
         {
             paused = false;
         }
-        lastSceneIndex = sceneIndex;
+        lastSceneIndex = instance.sceneIndex;
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 }
