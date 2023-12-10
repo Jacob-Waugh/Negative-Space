@@ -12,6 +12,7 @@ public class GameOver : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         DataHolder.instance.paused = false;
+        DataHolder.instance.updateScene();
     }
     public void RetryThis()
     {

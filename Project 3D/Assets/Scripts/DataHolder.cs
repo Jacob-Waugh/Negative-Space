@@ -13,7 +13,7 @@ public class DataHolder : MonoBehaviour
         if (instance != null)
         {
             instance.updateScene();
-            Destroy(instance);
+            Destroy(instance.gameObject);
             instance = this;
             DontDestroyOnLoad(this);
         }
