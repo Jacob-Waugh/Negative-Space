@@ -52,6 +52,16 @@ public class AudioManager : MonoBehaviour
             musicSource.Play();
            break;
 
+           case "Options":
+            musicSource.clip=mainMenuMusic;
+            musicSource.Play();
+           break;
+
+           case "Win":
+            musicSource.clip=mainMenuMusic;
+            musicSource.Play();
+           break;
+
            case "Level1":
             musicSource.clip=backgroundMusic;
             musicSource.Play();
