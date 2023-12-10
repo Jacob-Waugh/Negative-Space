@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 public class PlayersideCamera : MonoBehaviour
 {
     public GameObject flash;
-    Animator animator;
+    Animator flashAnimator;
 
     public static PlayersideCamera instance;
     private void Awake()
@@ -53,7 +53,7 @@ public class PlayersideCamera : MonoBehaviour
     public BoxCollider spawnBox;
     public bool dead = false;
     [SerializeField] GameObject pauseMenu;
-
+    [SerializeField] Animator cutsceneHandler;
     [SerializeField] GameObject[] interacts;
     [SerializeField] float outlineWidth = 3f;
 
@@ -61,11 +61,13 @@ public class PlayersideCamera : MonoBehaviour
     {
         pauseMenu = GameObject.Find("Canvas/PausePanel");
         pauseMenu.SetActive(false);
+        cutsceneHandler = GetComponent<Animator>();
+        cutsceneHandler.enabled = false;
         DataHolder.instance.updateScene();
         spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
         interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
         flash = GameObject.Find("Canvas/Flash");
-        animator = flash.GetComponent<Animator>();
+        flashAnimator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
         enemies = GameObject.FindGameObjectsWithTag("enemy").ToList();
         clues = GameObject.FindGameObjectsWithTag("clue").ToList();
@@ -109,7 +111,7 @@ public class PlayersideCamera : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1") && !DataHolder.instance.paused)
         {
-            animator.Play("Flash", -1, 0f);
+            flashAnimator.Play("Flash", -1, 0f);
             AudioManager.instance.PlaySFX(AudioManager.instance.cameraClick);
             polaroid.SetActive(true);
             cam.Take();
@@ -393,7 +395,8 @@ public class PlayersideCamera : MonoBehaviour
     IEnumerator DieCoroutine()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.death);
-        yield return new WaitForSeconds(0.5f);
+        cutsceneHandler.enabled = true;
+        yield return new WaitWhile(() => cutsceneHandler.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
         SceneManager.LoadScene("GameOver");
     }
 }
