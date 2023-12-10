@@ -24,4 +24,8 @@ public class pendulumScript : MonoBehaviour
        float angle = limit * Mathf.Sin(Time.time + random * speed);
        transform.localRotation = Quaternion.Euler(0,0,angle); 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        PlayersideCamera.instance.Die();
+    }
 }

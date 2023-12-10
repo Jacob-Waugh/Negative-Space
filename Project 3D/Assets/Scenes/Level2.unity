@@ -7822,7 +7822,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1980261084}
+    m_TransformParent: {fileID: 1944972496}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 91fb9adf8e44f0f42a23465885b52564, type: 3}
       propertyPath: m_LocalScale.x
@@ -25806,7 +25806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 72653eca49501884992d165d942cd255, type: 3}
       propertyPath: m_Name
-      value: pendulumNS (1)
+      value: pendulum
       objectReference: {fileID: 0}
     - target: {fileID: 3830644714817237922, guid: 72653eca49501884992d165d942cd255, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -29025,6 +29025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1583908873}
   - component: {fileID: 1583908872}
+  - component: {fileID: 1583908874}
   m_Layer: 0
   m_Name: pendulum
   m_TagString: Untagged
@@ -29063,6 +29064,29 @@ Transform:
   - {fileID: 18599863}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1583908874
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583908871}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.60533524
+  m_Height: 1.9031334
+  m_Direction: 1
+  m_Center: {x: -1.5941887, y: -6.08926, z: -2.6466532}
 --- !u!1 &1586989624
 GameObject:
   m_ObjectHideFlags: 0
@@ -37981,6 +38005,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 420.20486, y: 18.841362, z: 414.8517}
   m_Center: {x: 175.75877, y: -18.00642, z: -4.7273397}
+--- !u!1 &1944972495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1944972496}
+  m_Layer: 0
+  m_Name: ThirdGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1944972496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944972495}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1074793777}
+  m_Father: {fileID: 1980261084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1950535997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38648,7 +38704,7 @@ Transform:
   - {fileID: 1356810769}
   - {fileID: 199604179}
   - {fileID: 1516124692}
-  - {fileID: 1074793777}
+  - {fileID: 1944972496}
   - {fileID: 863876178}
   - {fileID: 791406025}
   - {fileID: 553237325}
