@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip backgroundMusic;
     public AudioClip mainMenuMusic;
+    public AudioClip winMenuMusic;
     public AudioClip death;
     public AudioClip footsteps;
     public AudioClip monster;
@@ -58,7 +59,7 @@ public class AudioManager : MonoBehaviour
            break;
 
            case "Win":
-            musicSource.clip=mainMenuMusic;
+            musicSource.clip=winMenuMusic;
             musicSource.Play();
            break;
 

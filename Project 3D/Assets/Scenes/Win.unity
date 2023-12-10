@@ -293,6 +293,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5639501691387514327, guid: ea556ec7cf0276445b2b97fdba120846, type: 3}
+      propertyPath: winMenuMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a6d832873e456b4e9c76453ee3c4f32, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
