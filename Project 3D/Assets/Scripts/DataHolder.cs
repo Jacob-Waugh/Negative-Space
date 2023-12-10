@@ -56,6 +56,10 @@ public class DataHolder : MonoBehaviour
     } 
     public void updateScene()
     {
+        if (paused)
+        {
+            paused = false;
+        }
         lastSceneIndex = sceneIndex;
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }

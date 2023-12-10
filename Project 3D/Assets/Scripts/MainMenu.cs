@@ -16,13 +16,13 @@ public class MainMenu : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     public void OnClickStart()
     {
        //audioManager.PlaySFX(audioManager.buttonClick);
-       //yeild return new WaitForSeconds(3);
+       //yield return new WaitForSeconds(3);
         SceneManager.LoadScene("Level1");
     }
 

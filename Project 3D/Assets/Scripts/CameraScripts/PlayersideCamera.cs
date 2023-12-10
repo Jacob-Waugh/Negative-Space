@@ -52,13 +52,15 @@ public class PlayersideCamera : MonoBehaviour
     public GameObject GameOverScreen;
     public BoxCollider spawnBox;
     public bool dead = false;
+    [SerializeField] GameObject pauseMenu;
 
     [SerializeField] GameObject[] interacts;
     [SerializeField] float outlineWidth = 3f;
 
     private void Start()
     {
-
+        pauseMenu = GameObject.Find("Canvas/PausePanel");
+        pauseMenu.SetActive(false);
         DataHolder.instance.updateScene();
         spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
         interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
@@ -280,12 +282,14 @@ public class PlayersideCamera : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 DataHolder.instance.paused = true;
                 //pause appear
+                pauseMenu.SetActive(true);
             }
             else
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 DataHolder.instance.paused = false;
                 //pause disappear
+                pauseMenu.SetActive(false);
             }
         }
     }

@@ -1,18 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameOver : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     //AudioManager.instance
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        DataHolder.instance.paused = false;
-    }
     public void RetryThis()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
