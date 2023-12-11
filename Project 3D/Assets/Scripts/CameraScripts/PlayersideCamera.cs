@@ -26,7 +26,7 @@ public class PlayersideCamera : MonoBehaviour
         }
     }
 
-    GameObject[] FindGameObjectsWithLayer(int layer) { 
+    public GameObject[] FindGameObjectsWithLayer(int layer) { 
         GameObject[] goArray = FindObjectsOfType(typeof(GameObject)) as GameObject[]; 
         var goList = new List<GameObject>(); 
         for (int i = 0; i < goArray.Length; i++) { 
@@ -54,18 +54,18 @@ public class PlayersideCamera : MonoBehaviour
     public bool dead = false;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] Animator cutsceneHandler;
-    [SerializeField] GameObject[] interacts;
+    [SerializeField] Animator winHandler;
+    public List<GameObject> interacts;
     [SerializeField] float outlineWidth = 3f;
 
     private void Start()
     {
         pauseMenu = GameObject.Find("Canvas/PausePanel");
-        pauseMenu.SetActive(false);
-        cutsceneHandler = GetComponent<Animator>();
+        pauseMenu.SetActive(false);;
         cutsceneHandler.enabled = false;
         DataHolder.instance.updateScene();
         spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
-        interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact"));
+        interacts = FindGameObjectsWithLayer(LayerMask.NameToLayer("interact")).ToList();
         flash = GameObject.Find("Canvas/Flash");
         flashAnimator = flash.GetComponent<Animator>();
         films = GameObject.FindGameObjectsWithTag("film").ToList();
@@ -253,9 +253,10 @@ public class PlayersideCamera : MonoBehaviour
                         Key keyScript = gop.GetComponent<Key>();
                         keyScript.Turn(go.transform);
                     }
-                    if (gop.tag == "lock")
+                    if (go.tag == "lock")
                     {
-                        Lock lockScript = gop.GetComponent<Lock>();
+                        Debug.Log("try unlock");
+                        Lock lockScript = go.GetComponent<Lock>();
                         if (lockScript.unlocked == true)
                         {
                             lockScript.Open();
@@ -320,7 +321,6 @@ public class PlayersideCamera : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(camcam.transform.position, pos - camcam.transform.position, out hit, 500f))
             {
-                Debug.Log(hit.transform.gameObject);
                 Debug.DrawRay(camcam.transform.position, pos - camcam.transform.position, UnityEngine.Color.yellow, 1);
                 if (hit.transform.gameObject.tag != "film" && hit.transform.gameObject.tag != "enemy" && hit.transform.gameObject.tag != "clue")
                 {
@@ -398,5 +398,20 @@ public class PlayersideCamera : MonoBehaviour
         cutsceneHandler.enabled = true;
         yield return new WaitWhile(() => cutsceneHandler.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
         SceneManager.LoadScene("GameOver");
+    }
+    public void Win()
+    {
+        StartCoroutine(WinCoroutine());
+        Debug.Log("ding!");
+    }
+    IEnumerator WinCoroutine()
+    {
+        GameObject winCutLoc = GameObject.Find("WinLocation");
+        transform.position = winCutLoc.transform.position;
+        DataHolder.instance.paused = true;
+        winHandler.enabled = true;
+        yield return new WaitWhile(() => winHandler.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
     }
 }
