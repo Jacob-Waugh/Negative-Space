@@ -48709,7 +48709,7 @@ PrefabInstance:
     - target: {fileID: 2999138781844018931, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: poltergeist
       value: 
-      objectReference: {fileID: 7059121169161047583, guid: f9eb529a092e6e140a8b83119715347a, type: 3}
+      objectReference: {fileID: 4528247106980062057, guid: 5026ed70d15d68b45bb1c3adbb3ebebd, type: 3}
     - target: {fileID: 3305554840845713261, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
