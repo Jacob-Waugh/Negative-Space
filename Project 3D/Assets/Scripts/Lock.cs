@@ -11,7 +11,6 @@ public class Lock : MonoBehaviour
     public GameObject openDoor;
     private void Start()
     {
-
         code = code.Substring(0, key.transform.childCount);
         keyScript = key.GetComponent<Key>();
         keyScript.InputCode = new int[code.Length];

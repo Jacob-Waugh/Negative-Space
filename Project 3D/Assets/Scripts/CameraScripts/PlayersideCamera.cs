@@ -54,14 +54,16 @@ public class PlayersideCamera : MonoBehaviour
     public bool dead = false;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] Animator cutsceneHandler;
-    [SerializeField] Animator winHandler;
+    [SerializeField] RuntimeAnimatorController death;
+    [SerializeField] RuntimeAnimatorController win;
     public List<GameObject> interacts;
     [SerializeField] float outlineWidth = 3f;
 
     private void Start()
     {
         pauseMenu = GameObject.Find("Canvas/PausePanel");
-        pauseMenu.SetActive(false);;
+        pauseMenu.SetActive(false);
+        cutsceneHandler = GetComponent<Animator>();
         cutsceneHandler.enabled = false;
         DataHolder.instance.updateScene();
         spawnBox = GameObject.Find("SpawnZone").GetComponent<BoxCollider>();
@@ -395,6 +397,7 @@ public class PlayersideCamera : MonoBehaviour
     IEnumerator DieCoroutine()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.death);
+        cutsceneHandler.runtimeAnimatorController = death;
         cutsceneHandler.enabled = true;
         yield return new WaitWhile(() => cutsceneHandler.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
         SceneManager.LoadScene("GameOver");
@@ -402,15 +405,18 @@ public class PlayersideCamera : MonoBehaviour
     public void Win()
     {
         StartCoroutine(WinCoroutine());
+        DataHolder.instance.paused = true;
         Debug.Log("ding!");
     }
     IEnumerator WinCoroutine()
     {
         GameObject winCutLoc = GameObject.Find("WinLocation");
-        transform.position = winCutLoc.transform.position;
-        DataHolder.instance.paused = true;
-        winHandler.enabled = true;
-        yield return new WaitWhile(() => winHandler.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
+        transform.rotation = Quaternion.identity;
+        transform.parent = winCutLoc.transform;
+        transform.position = Vector3.zero;
+        cutsceneHandler.runtimeAnimatorController = win;
+        cutsceneHandler.enabled = true;
+        yield return new WaitWhile(() => cutsceneHandler.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
