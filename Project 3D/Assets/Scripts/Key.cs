@@ -24,12 +24,6 @@ public class Key : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(Input.GetKeyDown(KeyCode.Alpha1)) { Turn(transform.GetChild(0)); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { Turn(transform.GetChild(1)); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { Turn(transform.GetChild(2)); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { Turn(transform.GetChild(3)); }
-        */
         
     }
     void Stringify()
@@ -50,7 +44,7 @@ public class Key : MonoBehaviour
     }
     public void Turn(Transform dial)
     {
-        dial.Rotate(0, 0, 90f, Space.Self);
+        dial.Rotate(0, 360f / (maxValue + 1), 0, Space.Self);
         ValueUpdate(dial);
     }
 }

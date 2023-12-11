@@ -8,8 +8,10 @@ public class Lock : MonoBehaviour
     public GameObject key;
     Key keyScript;
     public bool unlocked;
+    public GameObject openDoor;
     private void Start()
     {
+
         code = code.Substring(0, key.transform.childCount);
         keyScript = key.GetComponent<Key>();
         keyScript.InputCode = new int[code.Length];
@@ -25,16 +27,22 @@ public class Lock : MonoBehaviour
             if (keyScript.code == code)
             {
                 unlocked = true;
+                gameObject.layer = LayerMask.NameToLayer("interact");
+                PlayersideCamera.instance.interacts.Add(gameObject);
             }
             else
             {
                 unlocked = false;
+                gameObject.layer = 0;
             }
         }
     }
      public void Open()
     {
         Debug.Log("open!");
-        Destroy(gameObject);
+        Destroy(key);
+        gameObject.layer = LayerMask.NameToLayer("hidden");
+        openDoor.layer = 0;
+        PlayersideCamera.instance.Win();
     }
 }
