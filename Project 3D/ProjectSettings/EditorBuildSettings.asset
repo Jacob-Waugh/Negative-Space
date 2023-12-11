@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Level2.unity
     guid: 32c549f18b0a5bb40b8626ef75aba64a
   - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: 211e4c96657bbf245849a7e484eb2bd9
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: aab49bf8b66b47042b37f33a80a33652
+  - enabled: 1
     path: Assets/Scenes/Help.unity
     guid: 817902c01cd4b974e9fbea848a6b96cd
   - enabled: 1
@@ -23,10 +29,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 2c033d814e1b588438f3ebf50d097d81
-  - enabled: 1
-    path: Assets/Scenes/Win.unity
-    guid: 211e4c96657bbf245849a7e484eb2bd9
-  - enabled: 1
-    path: Assets/Scenes/Credits.unity
-    guid: aab49bf8b66b47042b37f33a80a33652
   m_configObjects: {}
