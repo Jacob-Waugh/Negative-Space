@@ -63,6 +63,11 @@ public class AudioManager : MonoBehaviour
             musicSource.Play();
            break;
 
+           case "Credits":
+            musicSource.clip=winMenuMusic;
+            musicSource.Play();
+           break;
+
            case "Level1":
             musicSource.clip=backgroundMusic;
             musicSource.Play();
