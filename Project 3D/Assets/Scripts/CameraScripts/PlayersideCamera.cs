@@ -264,6 +264,11 @@ public class PlayersideCamera : MonoBehaviour
                             lockScript.Open();
                         }
                     }
+                    if (go.tag == "door")
+                    {
+                        Win();
+                    }
+
                 }
             }
             else

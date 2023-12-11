@@ -514,6 +514,8 @@ MonoBehaviour:
   dead: 0
   pauseMenu: {fileID: 0}
   cutsceneHandler: {fileID: 0}
+  death: {fileID: 9100000, guid: 2644ead4842e87b4bace46f51dcc501b, type: 2}
+  win: {fileID: 9100000, guid: ab2761e102746274db3a47ad3cdd39e3, type: 2}
   interacts: []
   outlineWidth: 3
 --- !u!95 &-7497319018917451153
@@ -526,7 +528,7 @@ Animator:
   m_GameObject: {fileID: 4459864850019384750}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2644ead4842e87b4bace46f51dcc501b, type: 2}
+  m_Controller: {fileID: 9100000, guid: ab2761e102746274db3a47ad3cdd39e3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
