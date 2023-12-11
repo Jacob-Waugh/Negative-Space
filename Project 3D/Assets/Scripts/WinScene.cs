@@ -29,7 +29,10 @@ public class WinScene : MonoBehaviour
     {
         SceneManager.LoadScene("Options");
     }
-
+public void CreditsButton()
+    {
+        SceneManager.LoadScene("Credits");
+    }
     // Update is called once per frame
     void Update()
     {

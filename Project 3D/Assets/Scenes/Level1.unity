@@ -1408,6 +1408,7 @@ MonoBehaviour:
   code: 0123
   key: {fileID: 7977297}
   unlocked: 0
+  openDoor: {fileID: 0}
 --- !u!65 &87053653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3130,6 +3131,10 @@ PrefabInstance:
     - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_Name
       value: Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6974578246494171342, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_CastShadows
@@ -5082,6 +5087,10 @@ PrefabInstance:
     - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_Name
       value: Wall (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6974578246494171342, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_CastShadows
@@ -7875,6 +7884,10 @@ PrefabInstance:
     - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_Name
       value: Wall (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6974578246494171342, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_CastShadows
@@ -17426,6 +17439,10 @@ PrefabInstance:
     - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_Name
       value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6974578246494171342, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_CastShadows
@@ -28893,6 +28910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6974578246494171342, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -29248,6 +29269,10 @@ PrefabInstance:
     - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_Name
       value: Wall (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432537370998763118, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6974578246494171342, guid: b8332be22e352504bb43c45896cb0b52, type: 3}
       propertyPath: m_CastShadows
