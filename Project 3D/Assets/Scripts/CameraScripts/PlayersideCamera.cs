@@ -43,6 +43,7 @@ public class PlayersideCamera : MonoBehaviour
     [SerializeField] GameObject camcam;
     public Transform poofParticles;
     public GameObject poltergeist;
+    //public GameObject dog_ghost;
     public GameObject ghost;
     [SerializeField] CameraCamera cam;
     [SerializeField] RawImage window;

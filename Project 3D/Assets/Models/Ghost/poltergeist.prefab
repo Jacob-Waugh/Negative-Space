@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -8986457983522273741}
   - component: {fileID: 8457681131698592495}
   m_Layer: 10
-  m_Name: dog_ghost
+  m_Name: poltergeist
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   active: 1
-  sparkling: 1
-  sparklePrefab: {fileID: 0}
+  sparkling: 0
+  sparklePrefab: {fileID: 2720939291226786919, guid: 83a9b269897ef47459e6e15c1026923d, type: 3}
   sparkle: {fileID: 0}
 --- !u!65 &-8986457983522273741
 BoxCollider:
