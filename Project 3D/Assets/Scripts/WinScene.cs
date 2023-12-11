@@ -11,7 +11,9 @@ public class WinScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Confined;
+        DataHolder.instance.paused = false;
+        DataHolder.instance.updateScene();
     }
 
     public void ReturnToMainMenuButton()
